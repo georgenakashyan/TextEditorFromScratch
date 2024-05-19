@@ -6,11 +6,17 @@ from PyQt5.QtWidgets import QApplication, QWidget
 class CustomTextEdit(QWidget):
     def __init__(self):
         super().__init__()
-        self.text = [] # Right now this is an array but we should use a data struct instead
+        self.text = [] #TODO: Right now this is an array but we should use a data struct instead
         self.cursor_pos = (0, 0) # (row, col)
         self.cursor_visible = True
         self.font = QFont('Courier', 12)
 
+    def keyPressEvent(self, event):
+        self.text.append(event.text()) #BUG: Only appends, does not take into account cursor pos
+        print("You typed: " + event.text()) #INFO: Remove later
+        
+    def update_blinking(self):
+        ...
 
 def main():
     app = QApplication(sys.argv)
