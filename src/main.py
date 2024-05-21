@@ -28,7 +28,9 @@ class CustomTextEdit(QWidget):
             self.text[row] = self.text[row][:col-1] + self.text[row][col:]
             self.cursor_pos = (row, col-1)
         elif key == Qt.Key_Return or key == Qt.Key_Enter:
-            ...
+            new_row = row + 1
+            self.text.insert(new_row, "")
+            self.cursor_pos = (new_row, 0)
         elif key == Qt.Key_Left:
             ...
         elif key == Qt.Key_Right:
