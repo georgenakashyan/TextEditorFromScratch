@@ -21,11 +21,12 @@ class CustomTextEdit(QWidget):
     def keyPressEvent(self, event):
         row, col = self.cursor_pos
         key = event.key()
-        not_first_row = row > 0
-        not_last_row = row < len(self.text) - 1
+        first_row = row == 0
+        last_row = row == len(self.text) - 1
         
         if key == Qt.Key_Backspace:
-            ...
+            self.text[row] = self.text[row][:col-1] + self.text[row][col:]
+            self.cursor_pos = (row, col-1)
         elif key == Qt.Key_Return or key == Qt.Key_Enter:
             ...
         elif key == Qt.Key_Left:
