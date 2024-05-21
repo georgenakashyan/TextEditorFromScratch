@@ -10,6 +10,13 @@ class CustomTextEdit(QWidget):
         self.cursor_pos = (0, 0) # (row, col)
         self.cursor_visible = True
         self.font = QFont('Courier', 12)
+        
+        self.blink_timer = QTimer(self)
+        self.blink_timer.timeout.connect(self.blink_cursor)
+        self.blink_timer.start(500)  # Blink cursor every 500ms
+        
+        self.setFocusPolicy(Qt.StrongFocus)
+        self.setFont(self.font)
 
     def keyPressEvent(self, event):
         self.text.append(event.text()) #BUG: Only appends, does not take into account cursor pos
