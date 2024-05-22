@@ -1,12 +1,12 @@
 import sys
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPainter, QFont
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QMenuBar, QMenu, QLabel, QFrame
 
 class CustomTextEdit(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Untitled - Notepad")
+        
         self.text = [] #TODO: Right now this is an array but we should use a data struct instead
         self.cursor_pos = (0, 0) # (row, col)
         self.cursor_visible = True
@@ -109,13 +109,26 @@ class CustomTextEdit(QWidget):
     def set_blinker_and_true_col(self, row, col):
         self.cursor_pos = (row, col)
         self.true_col = col
+class MainWindow(QMainWindow):
+    def __init__(self, editor):
+        super().__init__()
+        
+        self.setWindowTitle("Untitled - Notepad")
+        self.setCentralWidget(editor)
+    
+    def add_menu_bar(self):
+        menu_bar = self.menuBar()
+        file_menu = menu_bar.addMenu('&File')
+        edit_menu = menu_bar.addMenu('&Edit')
+        help_menu = menu_bar.addMenu('&Help')
 
 def main():
     app = QApplication(sys.argv)
     editor = CustomTextEdit()
     editor.text = [""]  # Start with an empty line
-    editor.resize(800, 600)
-    editor.show()
+    window = MainWindow(editor)
+    window.resize(800, 600)
+    window.show()
     app.exec_()
 
 if __name__ == '__main__':
