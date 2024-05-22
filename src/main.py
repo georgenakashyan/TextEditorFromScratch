@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPainter, QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QMenuBar, QMenu, QLabel, QFrame
+from PyQt5.QtGui import QPainter, QFont, QIcon
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QAction
 
 class CustomTextEdit(QWidget):
     def __init__(self):
