@@ -11,7 +11,7 @@ class CustomTextEdit(QWidget):
         self.cursor_pos = (0, 0) # (row, col)
         self.cursor_visible = True
         self.true_col = 0
-        self.font = QFont('Courier', 12)
+        self.font = QFont('Consolas', 11)
         
         self.blink_timer = QTimer(self)
         self.blink_timer.timeout.connect(self.blink_cursor)
