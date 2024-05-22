@@ -83,6 +83,14 @@ class CustomTextEdit(QWidget):
             self.reset_cursor_blink()
         
         self.update()
+    
+    def undo(self):
+        print("Pressed shortcut for undo")
+        ...
+    
+    def redo(self):
+        print("Pressed shortcut for redo")
+        ...
         
     def paintEvent(self, event):
         qp = QPainter(self)
