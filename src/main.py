@@ -29,9 +29,17 @@ class CustomTextEdit(QWidget):
         last_col = col == len(self.text[row])
         
         if key == Qt.Key_Backspace:
-            self.text[row] = self.text[row][:col-1] + self.text[row][col:]
-            self.cursor_pos = (row, col-1)
-            self.cursor_visible = True
+            if (first_col and not first_row):
+                prev_row = row-1
+                prev_row_len = len(self.text[prev_row])
+                curr_row_len = len(self.text[row])
+                self.text[prev_row] = self.text[prev_row][:prev_row_len] + self.text[row][:curr_row_len]
+                self.text.pop(row)
+                self.set_blinker_and_true_col(prev_row, prev_row_len)
+            elif (not first_col):
+                self.text[row] = self.text[row][:col-1] + self.text[row][col:]
+                self.set_blinker_and_true_col(row, col-1)
+            self.reset_cursor_blink()
         elif key == Qt.Key_Return or key == Qt.Key_Enter:
             new_row = row + 1
             self.text.insert(new_row, "")
