@@ -51,40 +51,36 @@ class CustomTextEdit(QWidget):
             self.reset_cursor_blink()
         elif key == Qt.Key_Left:
             if (not first_col):
-                self.cursor_pos = (row, col-1)
-                self.true_col = col-1
-                self.cursor_visible = True
+                self.set_blinker_and_true_col(row, col-1)
+                self.reset_cursor_blink()
             elif (not first_row):
-                self.cursor_pos = (row-1, len(self.text[row-1]))
-                self.true_col = len(self.text[row-1])
-                self.cursor_visible = True
+                self.set_blinker_and_true_col(row-1, len(self.text[row-1]))
+                self.reset_cursor_blink()
         elif key == Qt.Key_Right:
             if (not last_col):
-                self.cursor_pos = (row, col+1)
-                self.true_col = col+1
-                self.cursor_visible = True
+                self.set_blinker_and_true_col(row, col+1)
+                self.reset_cursor_blink()
             elif (not last_row):
-                self.cursor_pos = (row+1, len(self.text[row+1]))
-                self.true_col = len(self.text[row+1])
-                self.cursor_visible = True
+                self.set_blinker_and_true_col(row+1, len(self.text[row+1]))
+                self.reset_cursor_blink()
         elif key == Qt.Key_Up:
             if (not first_row):
                 new_row = row - 1
                 new_col_len = len(self.text[new_row])
                 new_col = self.true_col if (self.true_col < new_col_len) else new_col_len
                 self.cursor_pos = (new_row, new_col)
-                self.cursor_visible = True
+                self.reset_cursor_blink()
         elif key == Qt.Key_Down:
             if (not last_row):
                 new_row = row + 1
                 new_col_len = len(self.text[new_row])
                 new_col = self.true_col if (self.true_col < new_col_len) else new_col_len
                 self.cursor_pos = (new_row, new_col)
-                self.cursor_visible = True
+                self.reset_cursor_blink()
         else:
             self.text[row] = self.text[row][:col] + event.text() + self.text[row][col:]
-            self.cursor_pos = (row, col+1)
-            self.true_col = col+1
+            self.set_blinker_and_true_col(row, col+1)
+            self.reset_cursor_blink()
         
         self.update()
         
