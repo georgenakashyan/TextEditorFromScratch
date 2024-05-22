@@ -9,6 +9,7 @@ class CustomTextEdit(QWidget):
         self.text = [] #TODO: Right now this is an array but we should use a data struct instead
         self.cursor_pos = (0, 0) # (row, col)
         self.cursor_visible = True
+        self.true_col = 0
         self.font = QFont('Courier', 12)
         
         self.blink_timer = QTimer(self)
@@ -34,21 +35,31 @@ class CustomTextEdit(QWidget):
             new_row = row + 1
             self.text.insert(new_row, "")
             self.cursor_pos = (new_row, 0)
+            self.true_col = 0
         elif key == Qt.Key_Left:
             if (not first_col):
                 self.cursor_pos = (row, col-1)
+                self.true_col = col-1
         elif key == Qt.Key_Right:
             if (not last_col):
                 self.cursor_pos = (row, col+1)
+                self.true_col = col+1
         elif key == Qt.Key_Up and not first_row:
-            ...
-        elif key == Qt.Key_Up and not_first_row:
-            ...
-        elif key == Qt.Key_Down and not_last_row:
-            ...
+            if (not first_row):
+                new_row = row - 1
+                new_col_len = len(self.text[new_row])
+                new_col = self.true_col if (self.true_col < new_col_len) else new_col_len
+                self.cursor_pos = (new_row, new_col)
+        elif key == Qt.Key_Down:
+            if (not last_row):
+                new_row = row + 1
+                new_col_len = len(self.text[new_row])
+                new_col = self.true_col if (self.true_col < new_col_len) else new_col_len
+                self.cursor_pos = (new_row, new_col)
         else:
             self.text[row] = self.text[row][:col] + event.text() + self.text[row][col:]
             self.cursor_pos = (row, col+1)
+            self.true_col = col+1
         
         self.update()
         
