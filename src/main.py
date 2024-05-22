@@ -24,38 +24,52 @@ class CustomTextEdit(QWidget):
         key = event.key()
         
         first_row = row == 0
-        first_col = col == 0 #bug
+        first_col = col == 0
         last_row = row == len(self.text) - 1
-        last_col = col == len(self.text[row]) #bug
+        last_col = col == len(self.text[row])
         
         if key == Qt.Key_Backspace:
             self.text[row] = self.text[row][:col-1] + self.text[row][col:]
             self.cursor_pos = (row, col-1)
+            self.cursor_visible = True
         elif key == Qt.Key_Return or key == Qt.Key_Enter:
             new_row = row + 1
             self.text.insert(new_row, "")
             self.cursor_pos = (new_row, 0)
             self.true_col = 0
+            self.cursor_visible = True
         elif key == Qt.Key_Left:
             if (not first_col):
                 self.cursor_pos = (row, col-1)
                 self.true_col = col-1
+                self.cursor_visible = True
+            elif (not first_row):
+                self.cursor_pos = (row-1, len(self.text[row-1]))
+                self.true_col = len(self.text[row-1])
+                self.cursor_visible = True
         elif key == Qt.Key_Right:
             if (not last_col):
                 self.cursor_pos = (row, col+1)
                 self.true_col = col+1
+                self.cursor_visible = True
+            elif (not last_row):
+                self.cursor_pos = (row+1, len(self.text[row+1]))
+                self.true_col = len(self.text[row+1])
+                self.cursor_visible = True
         elif key == Qt.Key_Up and not first_row:
             if (not first_row):
                 new_row = row - 1
                 new_col_len = len(self.text[new_row])
                 new_col = self.true_col if (self.true_col < new_col_len) else new_col_len
                 self.cursor_pos = (new_row, new_col)
+                self.cursor_visible = True
         elif key == Qt.Key_Down:
             if (not last_row):
                 new_row = row + 1
                 new_col_len = len(self.text[new_row])
                 new_col = self.true_col if (self.true_col < new_col_len) else new_col_len
                 self.cursor_pos = (new_row, new_col)
+                self.cursor_visible = True
         else:
             self.text[row] = self.text[row][:col] + event.text() + self.text[row][col:]
             self.cursor_pos = (row, col+1)
