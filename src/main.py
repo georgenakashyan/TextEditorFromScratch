@@ -42,10 +42,13 @@ class CustomTextEdit(QWidget):
             self.reset_cursor_blink()
         elif key == Qt.Key_Return or key == Qt.Key_Enter:
             new_row = row + 1
-            self.text.insert(new_row, "")
-            self.cursor_pos = (new_row, 0)
-            self.true_col = 0
-            self.cursor_visible = True
+            self.text[row] = self.text[row][:col] + event.text() + self.text[row][col:]
+            left_line = self.text[row][:col]
+            right_line = self.text[row][col:]
+            self.text[row] = left_line
+            self.text.insert(new_row, right_line)
+            self.set_blinker_and_true_col(new_row, 0)
+            self.reset_cursor_blink()
         elif key == Qt.Key_Left:
             if (not first_col):
                 self.cursor_pos = (row, col-1)
