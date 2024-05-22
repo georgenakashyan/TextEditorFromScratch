@@ -42,7 +42,6 @@ class CustomTextEdit(QWidget):
             self.reset_cursor_blink()
         elif key == Qt.Key_Return or key == Qt.Key_Enter:
             new_row = row + 1
-            self.text[row] = self.text[row][:col] + event.text() + self.text[row][col:]
             left_line = self.text[row][:col]
             right_line = self.text[row][col:]
             self.text[row] = left_line
@@ -69,6 +68,7 @@ class CustomTextEdit(QWidget):
                 new_col_len = len(self.text[new_row])
                 new_col = self.true_col if (self.true_col < new_col_len) else new_col_len
                 self.cursor_pos = (new_row, new_col)
+                print("New cursor pos: " + str(self.cursor_pos))
                 self.reset_cursor_blink()
         elif key == Qt.Key_Down:
             if (not last_row):
@@ -76,6 +76,7 @@ class CustomTextEdit(QWidget):
                 new_col_len = len(self.text[new_row])
                 new_col = self.true_col if (self.true_col < new_col_len) else new_col_len
                 self.cursor_pos = (new_row, new_col)
+                print("New cursor pos: " + str(self.cursor_pos))
                 self.reset_cursor_blink()
         else:
             self.text[row] = self.text[row][:col] + event.text() + self.text[row][col:]
@@ -109,6 +110,7 @@ class CustomTextEdit(QWidget):
     def set_blinker_and_true_col(self, row, col):
         self.cursor_pos = (row, col)
         self.true_col = col
+        print("New cursor pos: " + str(self.cursor_pos))
 
 def main():
     app = QApplication(sys.argv)
