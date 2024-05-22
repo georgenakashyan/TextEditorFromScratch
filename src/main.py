@@ -61,7 +61,7 @@ class CustomTextEdit(QWidget):
                 self.set_blinker_and_true_col(row, col+1)
                 self.reset_cursor_blink()
             elif (not last_row):
-                self.set_blinker_and_true_col(row+1, len(self.text[row+1]))
+                self.set_blinker_and_true_col(row+1, 0)
                 self.reset_cursor_blink()
         elif key == Qt.Key_Up:
             if (not first_row):
