@@ -21,8 +21,11 @@ class CustomTextEdit(QWidget):
     def keyPressEvent(self, event):
         row, col = self.cursor_pos
         key = event.key()
+        
         first_row = row == 0
+        first_col = col == 0 #bug
         last_row = row == len(self.text) - 1
+        last_col = col == len(self.text[row]) #bug
         
         if key == Qt.Key_Backspace:
             self.text[row] = self.text[row][:col-1] + self.text[row][col:]
@@ -32,8 +35,12 @@ class CustomTextEdit(QWidget):
             self.text.insert(new_row, "")
             self.cursor_pos = (new_row, 0)
         elif key == Qt.Key_Left:
-            ...
+            if (not first_col):
+                self.cursor_pos = (row, col-1)
         elif key == Qt.Key_Right:
+            if (not last_col):
+                self.cursor_pos = (row, col+1)
+        elif key == Qt.Key_Up and not first_row:
             ...
         elif key == Qt.Key_Up and not_first_row:
             ...
