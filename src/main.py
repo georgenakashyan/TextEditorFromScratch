@@ -56,7 +56,7 @@ class CustomTextEdit(QWidget):
                 self.cursor_pos = (row+1, len(self.text[row+1]))
                 self.true_col = len(self.text[row+1])
                 self.cursor_visible = True
-        elif key == Qt.Key_Up and not first_row:
+        elif key == Qt.Key_Up:
             if (not first_row):
                 new_row = row - 1
                 new_col_len = len(self.text[new_row])
