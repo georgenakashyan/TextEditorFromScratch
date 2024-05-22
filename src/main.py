@@ -94,6 +94,14 @@ class CustomTextEdit(QWidget):
     def blink_cursor(self):
         self.cursor_visible = not self.cursor_visible
         self.update()
+    
+    def reset_cursor_blink(self):
+        self.cursor_visible = True
+        self.blink_timer.start(500)
+    
+    def set_blinker_and_true_col(self, row, col):
+        self.cursor_pos = (row, col)
+        self.true_col = col
 
 def main():
     app = QApplication(sys.argv)
