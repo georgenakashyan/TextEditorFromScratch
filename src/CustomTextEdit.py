@@ -6,7 +6,7 @@ class CustomTextEdit(QWidget):
     def __init__(self):
         super().__init__()
         
-        self.text = [] #TODO: Right now this is an array but we should use a data struct instead
+        self.text = [""] #TODO: Right now this is an array but we should use a data struct instead
         self.cursor_pos = (0, 0) # (row, col)
         self.cursor_visible = True
         self.true_col = 0
