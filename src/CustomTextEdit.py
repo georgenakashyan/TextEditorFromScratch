@@ -116,3 +116,7 @@ class CustomTextEdit(QWidget):
     def set_blinker_and_true_col(self, row, col):
         self.cursor_pos = (row, col)
         self.true_col = col
+        
+    def setText(self, file_text):
+        self.text = file_text
+        self.update()
