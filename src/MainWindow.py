@@ -1,5 +1,6 @@
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QAction, QFileDialog, QDialog, QDialogButtonBox, QLabel, QVBoxLayout
+from DialogBox import DialogBox
 
 class MainWindow(QMainWindow):
     def __init__(self, editor):
@@ -10,6 +11,8 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(editor)
         self.add_menu_bar()
         self.filters = 'Text Files (*.txt)'
+        self.dialog_box = DialogBox()
+        self.path = ""
     
     def add_menu_bar(self):
         menu_bar = self.menuBar()
@@ -44,7 +47,7 @@ class MainWindow(QMainWindow):
         exit_action = QAction('&Exit', self)
         exit_action.setStatusTip('Exit')
         exit_action.setShortcut('Alt+F4')
-        exit_action.triggered.connect(self.quit)
+        #exit_action.triggered.connect(self.dialog_box.quit_dialog)
         file_menu.addAction(exit_action)
 
         # edit menu
@@ -73,10 +76,14 @@ class MainWindow(QMainWindow):
     def open_document(self):
         filename, _ = QFileDialog.getOpenFileName(self, filter=self.filters)
         if filename:
-            self.path = Path(filename)
+            self.path = Path(filename) #bug
             self.text_edit.setText(self.path.read_text())
             self.set_title(filename)
-            
+         
+    def confirm_save(self):
+        return True
+        ...
+    
     def save_document(self):
         # save the currently openned file
         if (self.path):
@@ -90,23 +97,6 @@ class MainWindow(QMainWindow):
         if not filename:
             return
 
-        self.path = Path(filename)
+        self.path = Path(filename) #bug
         self.path.write_text(self.text_edit.toPlainText())
         self.set_title(filename)
-
-    def quit(self):
-        dlg = QDialog(self)
-        dlg.setWindowTitle("Notepad")
-        QBtn = QDialogButtonBox.Ok | QDialogButtonBox.No | QDialogButtonBox.Cancel
-
-        dlg.buttonBox = QDialogButtonBox(QBtn)
-        dlg.buttonBox.accepted.connect(self.accept_save)
-        dlg.buttonBox.rejected.connect(self.reject_save)
-        dlg.buttonBox.rejected.connect(self.cancel_save)
-
-        dlg.layout = QVBoxLayout()
-        message = QLabel("Do you want to save changes to " + str(self.windowTitle()) + "?")
-        dlg.layout.addWidget(message)
-        dlg.layout.addWidget(dlg.buttonBox)
-        dlg.setLayout(dlg.layout)
-        dlg.exec()

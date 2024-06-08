@@ -2,34 +2,36 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPainter, QFont, QIcon
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QAction, QFileDialog, QDialog, QDialogButtonBox, QLabel, QVBoxLayout
 
-class DialogBox(QDialogButtonBox):
-    def __init__():
+class DialogBox(QDialog):
+    def __init__(self):
         super().__init__()
         ...
+        
+    def open_dialog(self):
+        ...
     
-    def OpenDialog(self):
-        dlg = QDialog(self)
-        dlg.setWindowTitle("Notepad")
+    def quit_dialog(self):
+        self.setWindowTitle("Notepad")
         QBtn = QDialogButtonBox.Ok | QDialogButtonBox.No | QDialogButtonBox.Cancel
 
-        dlg.buttonBox = QDialogButtonBox(QBtn)
-        dlg.buttonBox.accepted.connect(self.accept_save)
-        dlg.buttonBox.rejected.connect(self.reject_save)
-        dlg.buttonBox.rejected.connect(self.cancel_save)
+        self.buttonBox = QDialogButtonBox(QBtn)
+        self.buttonBox.accepted.connect(self.accept_save)
+        self.buttonBox.rejected.connect(self.reject_save)
+        self.buttonBox.rejected.connect(self.cancel_save)
 
-        dlg.layout = QVBoxLayout()
+        self.layout = QVBoxLayout()
         message = QLabel("Do you want to save changes to " + str(self.windowTitle()) + "?")
-        dlg.layout.addWidget(message)
-        dlg.layout.addWidget(dlg.buttonBox)
-        dlg.setLayout(dlg.layout)
-        dlg.exec()
+        self.layout.addWidget(message)
+        self.layout.addWidget(self.buttonBox)
+        self.setLayout(self.layout)
+        self.exec()
     
     def accept_save(self):
-        self.save_document()
-        self.destroy()
+        super.save_document()
+        super.destroy()
         
     def reject_save(self):
-        self.destroy()
+        super.destroy()
     
     def cancel_save(self):
-        dialog.close()
+        self.close()

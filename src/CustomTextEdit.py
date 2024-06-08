@@ -18,6 +18,8 @@ class CustomTextEdit(QWidget):
         
         self.setFocusPolicy(Qt.StrongFocus)
         self.setFont(self.font)
+        
+        self.unsaved = False
 
     def keyPressEvent(self, event):
         row, col = self.cursor_pos
