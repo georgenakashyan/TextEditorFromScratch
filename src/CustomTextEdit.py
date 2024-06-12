@@ -99,11 +99,11 @@ class CustomTextEdit(QWidget):
         metrics = qp.fontMetrics()
         row_height = metrics.height()
         for row, line in enumerate(self.text):
-            qp.drawText(0, (row+1) * row_height, line)
+            qp.drawText(4, ((row+1) * row_height)-4, line)
         
         if self.cursor_visible:
             row, col = self.cursor_pos
-            x = metrics.horizontalAdvance(self.text[row][:col])
+            x = metrics.horizontalAdvance(self.text[row][:col]) + 4
             y = row * row_height
             qp.drawLine(x, y, x, y + row_height)
     
