@@ -2,7 +2,6 @@ import sys
 from PyQt5.QtWidgets import QApplication
 from MainWindow import MainWindow
 from CustomTextEdit import CustomTextEdit
-from DialogBox import DialogBox
 
 def main():
     app = QApplication(sys.argv)
