@@ -77,7 +77,7 @@ class MainWindow(QMainWindow):
         filename, _ = QFileDialog.getOpenFileName(self, filter=self.filters)
         if filename:
             self.path = Path(filename) #bug
-            self.text_edit.setText(self.path.read_text())
+            self.text_edit.set_text(self.path.read_text())
             self.set_title(filename)
          
     def confirm_save(self):
